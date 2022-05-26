@@ -1,3 +1,3 @@
 # Flagboard
 
-A description of this package.
+The Feature Flag Dashboard 
