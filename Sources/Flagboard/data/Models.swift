@@ -16,16 +16,9 @@ internal struct Param<T> {
     let value: T
 }
 
-class FeatureFlagS: Identifiable {
-    var id: ObjectIdentifier
-
+struct FeatureFlagS: Identifiable {
+    let id = UUID()
     let featureFlag: FeatureFlag
-
-    internal init(id: ObjectIdentifier = ObjectIdentifier(FeatureFlag.self), featureFlag: FeatureFlag) {
-        self.id = id
-        self.featureFlag = featureFlag
-    }
-
 }
 
 internal enum FeatureFlag {

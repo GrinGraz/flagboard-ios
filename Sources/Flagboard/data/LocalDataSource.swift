@@ -23,9 +23,6 @@ internal struct LocalDataSource: DataSource {
     }
 
     func save(key: String, value: Any) {
-//        switch value {
-//
-//        }
         userDefaults.setValue(value, forKey: key)
     }
 
@@ -34,22 +31,7 @@ internal struct LocalDataSource: DataSource {
                 !ffs.isEmpty else {
             return Either.failure(FBDataError.noDataError)
         }
-        let parsedMap = ffs.mapValues { value in
-            var booleanValue = false
-            var isABool = false
-            ffs.forEach { key, value2 in
-                if key.contains("Bool") {
-                    booleanValue = value as! Int == 0
-                    isABool = !isABool
-                }
-            }
-            if isABool {
-                return booleanValue
-            } else {
-                return value as Any
-            }
-        }
-        return Either.success(parsedMap)
+        return Either.success(ffs)
     }
 
     func getIntResult(key: String) -> Either<FBDataError, Int> {

@@ -14,11 +14,11 @@ public struct FlagboardView: View {
                 case .intFlag(let param):
                     Text("\(param.key.value) \(param.value)")
                 case .booleanFlag(let param):
-                    Text("\(param.key.value) \(param.value)")
+                    Text("\(param.key.value) \(param.value.description)")
                 case .stringFlag(let param):
                     Text("\(param.key.value) \(param.value)")
                 case .unknownFlag(let param):
-                    Text("\(param.key.value) \(param.value)")
+                    Text("\(param.key.value)")
                 }
             }
         }

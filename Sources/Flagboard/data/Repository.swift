@@ -73,11 +73,11 @@ struct Repository {
         case (let value):
             if value.contains("{") {
                 let ff = FeatureFlag.stringFlag(param: Param(key: Key(value: param.key.value), value: param.value ))
-                let flag = FeatureFlagS(id: ObjectIdentifier(FeatureFlag.self), featureFlag: ff)
+                let flag = FeatureFlagS(featureFlag: ff)
                 return flag
             } else {
                 let ff = FeatureFlag.stringFlag(param: Param(key: Key(value: param.key.value), value: param.value ))
-                let flag = FeatureFlagS(id: ObjectIdentifier(FeatureFlag.self), featureFlag: ff)
+                let flag = FeatureFlagS(featureFlag: ff)
                 return flag
             }
         }
