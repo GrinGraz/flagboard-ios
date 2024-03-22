@@ -28,14 +28,14 @@ internal struct FlagboardInternal {
         log("\(flagsLoadedAndStrategyMessage)\(conflictStrategy)")
     }
     
-    internal static func open() -> FlagboardView? {
+    internal static func open() -> UIViewController? {
         switch state {
         case .unknown:
             log(unknownStateMessage)
             return nil
         case .initialized(let dataState):
             if dataState == .ffLoaded {
-                return FlagboardView()
+                return FlagboardViewController()
             } else {
                 log(initializedWithoutDataStateMessage)
                 return nil
@@ -77,6 +77,10 @@ internal struct FlagboardInternal {
     
     internal static func reset() {
         repository.clear()
+    }
+
+    internal static func save(key: String, value: Any) {
+        repository.save(key: key, value: value)
     }
 
     private static func handleError<T>(key: String, error: FBDataError, type: T) -> Any {
