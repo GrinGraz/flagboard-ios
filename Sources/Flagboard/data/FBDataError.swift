@@ -11,4 +11,5 @@ internal enum FBDataError {
     case keyNotExistError
     case wrongTypeError
     case noDataError
+    case empty
 }

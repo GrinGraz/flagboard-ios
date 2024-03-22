@@ -40,21 +40,30 @@ internal struct LocalDataSource: DataSource {
     }
 
     func getIntResult(key: String) -> Either<FBDataError, Int> {
-        return safeGetValue(key: key) {
-            userDefaults.integer(forKey: key)
+        guard let value = getValue(forKey: key) as? Int
+        else {
+            return .failure(.keyNotExistError)
         }
+
+        return .success(value)
     }
 
     func getStringResult(key: String) -> Either<FBDataError, String> {
-        return safeGetValue(key: key) {
-            userDefaults.string(forKey: key)!
+        guard let value = getValue(forKey: key) as? String
+        else {
+            return .failure(.keyNotExistError)
         }
+
+        return .success(value)
     }
 
     func getBooleanResult(key: String) -> Either<FBDataError, Bool> {
-        return safeGetValue(key: key) {
-            userDefaults.bool(forKey: key)
+        guard let value = getValue(forKey: key) as? Bool
+        else {
+            return .failure(.keyNotExistError)
         }
+
+        return .success(value)
     }
 
     func clear() {
@@ -63,22 +72,8 @@ internal struct LocalDataSource: DataSource {
         }
     }
 
-    private func safeGetValue<T>(key: String, block: () -> T) -> Either<FBDataError, T> {
-        if (userDefaults.object(forKey: key) != nil) {
-            return tryGetValue(block)
-        } else {
-            return Either.failure(.keyNotExistError)
-        }
-    }
-
-    private func tryGetValue<T>(_ block: () throws -> T?) -> Either<FBDataError, T> {
-        do {
-            if try block() == nil {
-                return Either.failure(.noDataError)
-            }
-            return try Either.success(block()!)
-        } catch {
-            return Either.failure(.wrongTypeError)
-        }
+    private func getValue(forKey key: String) -> Any? {
+        guard let flags = userDefaults.dictionary(forKey: "allflags") else { return nil }
+        return flags[key]
     }
 }
