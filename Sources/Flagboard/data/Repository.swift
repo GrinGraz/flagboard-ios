@@ -17,14 +17,7 @@ struct Repository {
     }
 
     internal func save(featureFlag: Dictionary<String, Any>, conflictStrategy: ConflictStrategy) {
-        switch (conflictStrategy) {
-        case .keep:
-            if getAll().isEmpty {
-                localDataSource.save(ffs: featureFlag)
-            }
-        case .replace:
-            localDataSource.save(ffs: featureFlag)
-        }
+        localDataSource.save(ffs: featureFlag)
     }
 
     internal func getAll() -> Array<FeatureFlagS> {
