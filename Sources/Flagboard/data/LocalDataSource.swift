@@ -23,12 +23,9 @@ internal struct LocalDataSource: DataSource {
     }
 
     func save(key: String, value: Any) {
-        guard var existingFlags = userDefaults.dictionary(forKey: "allflags") else { return }
-        
-        if existingFlags[key] != nil {
-            existingFlags[key] = value
-            userDefaults.set(existingFlags, forKey: "allflags")
-        }
+        var existingFlags = userDefaults.dictionary(forKey: "allflags") ?? [:]
+        existingFlags[key] = value
+        userDefaults.set(existingFlags, forKey: "allflags")
     }
 
     func getAll() -> Either<FBDataError, Dictionary<String, Any>> {
