@@ -54,4 +54,3 @@ To retrieve the current status
 ```swift
 Flagboard.getState()
 ```
-
