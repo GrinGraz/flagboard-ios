@@ -34,12 +34,7 @@ internal struct FlagboardInternal {
             log(unknownStateMessage)
             return nil
         case .initialized(let dataState):
-            if dataState == .ffLoaded {
-                return FlagboardViewController()
-            } else {
-                log(initializedWithoutDataStateMessage)
-                return nil
-            }
+            return FlagboardViewController()
         }
     }
     
