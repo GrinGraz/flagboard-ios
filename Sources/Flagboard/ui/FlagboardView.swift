@@ -10,11 +10,10 @@ import UIKit
 public class FlagboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     private var tableView: UITableView!
-    private var featureFlags: [FeatureFlagS] = FlagboardInternal.getFlags()
+    private var featureFlags: [FeatureFlagS] = []
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView = UITableView(frame: view.bounds, style: .plain)
         tableView.dataSource = self
         tableView.delegate = self
@@ -22,6 +21,10 @@ public class FlagboardViewController: UIViewController, UITableViewDataSource, U
         view.addSubview(tableView)
     }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        featureFlags = FlagboardInternal.getFlags()
+    }
     // MARK: - UITableViewDataSource
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

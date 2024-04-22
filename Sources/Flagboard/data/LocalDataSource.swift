@@ -16,7 +16,6 @@ internal struct LocalDataSource: DataSource {
     }
 
     func save(ffs: Dictionary<String, Any>) {
-        userDefaults.set(ffs, forKey: "allflags")
         ffs.forEach { key, value in
             save(key: key, value: value)
         }
