@@ -3,8 +3,6 @@
 
 Flagboard has a small and familiar API that allows you to use "local" remote configurations (AKA Feature Flags) inside your app.
 It could be loaded from services like Firebase Remote Config or Apptimize. Custom feature flags can also be loaded on demand.
-[![](https://jitpack.io/v/GrinGraz/flagboard-android.svg)](https://jitpack.io/#GrinGraz/flagboard-android)
-
 
 ## Usage
 Add Flagboard to your project in the SPM Dependencies
