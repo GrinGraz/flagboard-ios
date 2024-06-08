@@ -27,3 +27,18 @@ internal enum FeatureFlag {
     case booleanFlag(param: Param<Bool>)
     case unknownFlag(param: Param<Any>)
 }
+
+extension FeatureFlag {
+    func getValue() -> String {
+        switch self {
+        case .intFlag(let param):
+            return param.key.value
+        case .stringFlag(let param):
+            return param.key.value
+        case .booleanFlag(let param):
+            return param.key.value
+        case .unknownFlag(let param):
+            return param.key.value
+        }
+    }
+}

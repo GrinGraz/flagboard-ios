@@ -34,7 +34,10 @@ internal struct FlagboardInternal {
             log(unknownStateMessage)
             return nil
         case .initialized(let dataState):
-            return FlagboardViewController()
+            //return FlagboardViewController()
+            let viewModel = FlagboardViewModel()
+            let flagBoardView = FlagboardView(viewModel: viewModel)
+            return UIHostingController(rootView: flagBoardView)
         }
     }
     
