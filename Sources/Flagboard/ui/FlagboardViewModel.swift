@@ -17,19 +17,14 @@ public class FlagboardViewModel: ObservableObject, FlagboardViewModelProtocol {
     @State var searchText = ""
     
     private var featureFlags: [FeatureFlagS] = [
-        FeatureFlagS(featureFlag: .booleanFlag(param: .init(key: .init(value: "ff_new_home"), value: true))),
-        FeatureFlagS(featureFlag: .booleanFlag(param: .init(key: .init(value: "ff_chat_enabled"), value: false))),
-        FeatureFlagS(featureFlag: .stringFlag(param: .init(key: .init(value: "ff_string_value"), value: "Hello World!"))),
+        //FeatureFlagS(featureFlag: .booleanFlag(param: .init(key: .init(value: "ff_new_home"), value: true))),
+        //FeatureFlagS(featureFlag: .booleanFlag(param: .init(key: .init(value: "ff_chat_enabled"), value: false))),
+        //FeatureFlagS(featureFlag: .stringFlag(param: .init(key: .init(value: "ff_string_value"), value: "Hello World!"))),
     ]
     
     var filteredItems: [FeatureFlagS] {
         if searchText.isEmpty {
-            //return featureFlags
-            return [
-                FeatureFlagS(featureFlag: .booleanFlag(param: .init(key: .init(value: "ff_new_home"), value: true))),
-                FeatureFlagS(featureFlag: .booleanFlag(param: .init(key: .init(value: "ff_chat_enabled"), value: false))),
-                FeatureFlagS(featureFlag: .stringFlag(param: .init(key: .init(value: "ff_string_value"), value: "Hello World!"))),
-            ]
+            return featureFlags
         } else {
             
             return featureFlags.filter { flag in flag.featureFlag.getValue().localizedCaseInsensitiveContains(searchText) }
@@ -39,6 +34,4 @@ public class FlagboardViewModel: ObservableObject, FlagboardViewModelProtocol {
     public init() {
         featureFlags = FlagboardInternal.getFlags()
     }
-    
-    
 }
