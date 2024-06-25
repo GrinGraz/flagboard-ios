@@ -81,9 +81,10 @@ internal struct LocalDataSource: DataSource {
     }
 
     func clear() {
-        userDefaults.dictionaryRepresentation().keys.forEach { key in
-            userDefaults.removeObject(forKey: key)
-        }
+        userDefaults.removeObject(forKey: "allflags")
+//        userDefaults.dictionaryRepresentation().keys.forEach { key in
+//            userDefaults.removeObject(forKey: key)
+//        }
     }
 
     private func getValue(forKey key: String) -> Any? {
