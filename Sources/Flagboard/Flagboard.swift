@@ -28,6 +28,10 @@ public struct Flagboard {
     public static func open() -> UIViewController? {
         FlagboardInternal.open()
     }
+    
+    public static func openn() {
+        FlagboardInternal.openn()
+    }
 
     public static func getInt(key: String) -> Int {
         FlagboardInternal.getInt(key: key)

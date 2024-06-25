@@ -25,6 +25,7 @@ internal struct LocalDataSource: DataSource {
         var existingFlags = userDefaults.dictionary(forKey: "allflags") ?? [:]
         existingFlags[key] = value
         userDefaults.set(existingFlags, forKey: "allflags")
+        print("here!")
     }
 
     func getAll() -> Either<FBDataError, Dictionary<String, Any>> {
@@ -32,7 +33,24 @@ internal struct LocalDataSource: DataSource {
                 !ffs.isEmpty else {
             return Either.failure(FBDataError.noDataError)
         }
-        return Either.success(ffs)
+        
+        let castedFlags: [String: Any] = ffs.mapValues { value in
+            if let boolValue = value as? Bool {
+                return boolValue
+            }
+            
+            if let stringValue = value as? String {
+                return stringValue
+            }
+            
+            if let intValue = value as? Int {
+                return intValue
+            }
+            
+            return value
+        }
+        
+        return Either.success(castedFlags)
     }
 
     func getIntResult(key: String) -> Either<FBDataError, Int> {

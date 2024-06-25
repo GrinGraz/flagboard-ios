@@ -41,6 +41,25 @@ internal struct FlagboardInternal {
         }
     }
     
+    internal static func openn() {
+        switch state {
+        case .unknown:
+            log(unknownStateMessage)
+            return
+        case .initialized(let dataState):
+            
+            guard let rootViewController = UIApplication.shared.windows.first?.rootViewController else {
+                return
+            }
+            let viewModel = FlagboardViewModel()
+            let flagBoardView = FlagboardView(viewModel: viewModel)
+            let flagboardHosting = UIHostingController(rootView: flagBoardView)
+            flagboardHosting.modalPresentationStyle = .fullScreen
+            rootViewController.present(flagboardHosting, animated: true)
+            return
+        }
+    }
+    
     internal static func getInt(key: String) -> Int {
         repository.getInt(key: key).fold(
             { error in handleError(key: key, error: error, type: Int.self) as! Int },
@@ -66,7 +85,7 @@ internal struct FlagboardInternal {
     }
     
     internal static func getFlags() -> Array<FeatureFlagS> {
-        return repository.getAll()
+        return repository.getAll().sorted(by: { $0.featureFlag.getKey() < $1.featureFlag.getKey()})
     }
     
     internal static func getState() -> FBState {

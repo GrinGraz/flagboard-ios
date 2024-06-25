@@ -13,14 +13,22 @@ public struct FlagboardView: View {
     public var body: some View {
         NavigationView {
             VStack{
-                TextField("Buscar", text: viewModel.$searchText)
+                TextField("Buscar", text: $viewModel.searchText)
                     .textFieldStyle(.roundedBorder)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
+                    .padding(10)
                    Spacer()
                 if viewModel.filteredItems.count > 0 {
                     List(viewModel.filteredItems) { flag in
-                        FeatureFlagRow(featureFlag: flag.featureFlag)
+                        switch flag.featureFlag {
+                        case .stringFlag(let param):
+                            StringFlagRow(key: param.key.value, value: param.value)
+                        case .booleanFlag(let param):
+                            BooleanFlagRow(key: param.key.value, value: param.value, viewModel: viewModel)
+                        default:
+                            EmptyView()
+                        }
                     }
                 } else {
                     Text("¡No hay flags para mostrar 🚩!")
@@ -39,30 +47,25 @@ public struct FlagboardView: View {
         
     }
     
-    struct FeatureFlagRow: View {
-        var featureFlag: FeatureFlag
-        
-        var body: some View {
-            HStack {
-                switch featureFlag {
-                case .stringFlag(let param):
-                    StringFlagRow(key: param.key.value, value: param.value)
-                case .booleanFlag(let param):
-                    BooleanFlagRow(key: param.key.value, value: param.value)
-                default:
-                    EmptyView()
-                }
-            }
-        }
-    }
-    
     struct BooleanFlagRow: View {
         let key: String
         @State var value: Bool
+        @ObservedObject var viewModel: FlagboardViewModel
         
         var body: some View {
-            Text(key)
-            Toggle("", isOn: $value)
+            HStack {
+                Image("boolean-icon", bundle: Bundle.ds)
+                    .frame(width: 24, height: 24)
+                Text(key)
+                    .font(.callout)
+                Spacer()
+                Toggle("", isOn: $value)
+                    .onChange(of: value) { newValue in
+                        viewModel.updateFlag(key: key, isOn: newValue)
+                    }
+                    .labelsHidden()
+                
+            }
         }
     }
     
@@ -72,14 +75,19 @@ public struct FlagboardView: View {
         @State private var showSheet = false
         
         var body: some View {
-            Text(key)
-                .onTapGesture {
-                    showSheet.toggle()
-                }
-                .sheet(isPresented: $showSheet) {
-                    SheetView(title: key,
-                              message: value)
-                }
+            HStack{
+                Image("string-icon", bundle: Bundle.ds)
+                    .frame(width: 24, height: 24)
+                Text(key)
+                    .font(.callout)
+                    .onTapGesture {
+                        showSheet.toggle()
+                    }
+                    .sheet(isPresented: $showSheet) {
+                        SheetView(title: key,
+                                  message: value)
+                    }
+            }
         }
     }
     

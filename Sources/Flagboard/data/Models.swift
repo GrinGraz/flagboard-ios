@@ -29,7 +29,7 @@ internal enum FeatureFlag {
 }
 
 extension FeatureFlag {
-    func getValue() -> String {
+    func getKey() -> String {
         switch self {
         case .intFlag(let param):
             return param.key.value

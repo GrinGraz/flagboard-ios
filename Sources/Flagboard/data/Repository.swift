@@ -17,7 +17,16 @@ struct Repository {
     }
 
     internal func save(featureFlag: Dictionary<String, Any>, conflictStrategy: ConflictStrategy) {
-        localDataSource.save(ffs: featureFlag)
+        switch conflictStrategy {
+        case .replace:
+            clear()
+            localDataSource.save(ffs: featureFlag)
+        case .keep:
+            if getAll().isEmpty {
+                localDataSource.save(ffs: featureFlag)
+            }
+        }
+        
     }
 
     internal func getAll() -> Array<FeatureFlagS> {
@@ -80,7 +89,7 @@ struct Repository {
         localDataSource.save(key: key, value: value)
     }
 
-    func clear(){
+    func clear() {
         localDataSource.clear()
     }
 }
