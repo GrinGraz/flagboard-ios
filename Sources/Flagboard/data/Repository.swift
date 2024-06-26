@@ -17,7 +17,16 @@ struct Repository {
     }
 
     internal func save(featureFlag: Dictionary<String, Any>, conflictStrategy: ConflictStrategy) {
-        localDataSource.save(ffs: featureFlag)
+        switch conflictStrategy {
+        case .replace:
+            clear()
+            localDataSource.save(ffs: featureFlag)
+        case .keep:
+            if getAll().isEmpty {
+                localDataSource.save(ffs: featureFlag)
+            }
+        }
+        
     }
 
     internal func getAll() -> Array<FeatureFlagS> {
@@ -53,6 +62,10 @@ struct Repository {
                 let ff = FeatureFlag.booleanFlag(param: Param(key: Key(value: entry.key), value: entry.value as! Bool))
                 let flag = FeatureFlagS(featureFlag: ff)
                 return flag
+            case is [String: Any]:
+                let ff = FeatureFlag.jsonFlag(param: Param(key: Key(value: entry.key), value: entry.value as! [String: Any]))
+                let flag = FeatureFlagS(featureFlag: ff)
+                return flag
             default:
                 let ff = FeatureFlag.unknownFlag(param: Param(key: Key(value: entry.key), value: entry.value ))
                 let flag = FeatureFlagS(featureFlag: ff)
@@ -80,7 +93,7 @@ struct Repository {
         localDataSource.save(key: key, value: value)
     }
 
-    func clear(){
+    func clear() {
         localDataSource.clear()
     }
 }

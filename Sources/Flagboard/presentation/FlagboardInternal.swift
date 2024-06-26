@@ -28,13 +28,19 @@ internal struct FlagboardInternal {
         log("\(flagsLoadedAndStrategyMessage)\(conflictStrategy)")
     }
     
-    internal static func open() -> UIViewController? {
+    internal static func open() {
         switch state {
         case .unknown:
             log(unknownStateMessage)
-            return nil
-        case .initialized(let dataState):
-            return FlagboardViewController()
+            return
+        case .initialized(_):
+            guard let rootViewController = getRootViewController() else { return }
+            let viewModel = FlagboardViewModel()
+            let flagBoardView = FlagboardView(viewModel: viewModel)
+            let flagboardHosting = UIHostingController(rootView: flagBoardView)
+            flagboardHosting.modalPresentationStyle = .fullScreen
+            rootViewController.present(flagboardHosting, animated: true)
+            return
         }
     }
     
@@ -63,7 +69,7 @@ internal struct FlagboardInternal {
     }
     
     internal static func getFlags() -> Array<FeatureFlagS> {
-        return repository.getAll()
+        return repository.getAll().sorted(by: { $0.featureFlag.getKey() < $1.featureFlag.getKey()})
     }
     
     internal static func getState() -> FBState {
@@ -96,5 +102,12 @@ internal struct FlagboardInternal {
         }
         log("key \(key) throws \(error). Default value was returned")
         return defaultValue
+    }
+    
+    internal static func getRootViewController() -> UIViewController? {
+        guard let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
+            return nil
+        }
+        return scene.windows.first { $0.isKeyWindow }?.rootViewController
     }
 }

@@ -25,7 +25,9 @@ public struct Flagboard {
             conflictStrategy: conflictStrategy)
     }
 
-    public static func open() -> UIViewController? {
+    
+    
+    public static func open() {
         FlagboardInternal.open()
     }
 
