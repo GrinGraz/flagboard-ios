@@ -25,12 +25,10 @@ public struct Flagboard {
             conflictStrategy: conflictStrategy)
     }
 
-    public static func open() -> UIViewController? {
-        FlagboardInternal.open()
-    }
     
-    public static func openn() {
-        FlagboardInternal.openn()
+    
+    public static func open() {
+        FlagboardInternal.open()
     }
 
     public static func getInt(key: String) -> Int {

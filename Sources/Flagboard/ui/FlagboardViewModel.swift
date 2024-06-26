@@ -9,17 +9,14 @@ import Foundation
 import SwiftUI
 
 protocol FlagboardViewModelProtocol {
-    
+    func updateFlag(key: String, isOn: Bool)
+    var filteredItems: [FeatureFlagS] { get }
 }
 
 public class FlagboardViewModel: ObservableObject, FlagboardViewModelProtocol {
     
     @Published var searchText = ""
     @Published private var featureFlags: [FeatureFlagS] = []
-//    @Published private var featureFlags: [FeatureFlagS] = [
-//        .init(featureFlag: .booleanFlag(param: .init(key: .init(value: "bool_long_long_long_key_value"), value: true))),
-//        .init(featureFlag: .stringFlag(param: .init(key: .init(value: "string_key"), value: "string")))
-//    ]
     
     var filteredItems: [FeatureFlagS] {
         if searchText.isEmpty {

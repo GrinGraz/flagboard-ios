@@ -62,6 +62,10 @@ struct Repository {
                 let ff = FeatureFlag.booleanFlag(param: Param(key: Key(value: entry.key), value: entry.value as! Bool))
                 let flag = FeatureFlagS(featureFlag: ff)
                 return flag
+            case is [String: Any]:
+                let ff = FeatureFlag.jsonFlag(param: Param(key: Key(value: entry.key), value: entry.value as! [String: Any]))
+                let flag = FeatureFlagS(featureFlag: ff)
+                return flag
             default:
                 let ff = FeatureFlag.unknownFlag(param: Param(key: Key(value: entry.key), value: entry.value ))
                 let flag = FeatureFlagS(featureFlag: ff)

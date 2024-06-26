@@ -14,7 +14,7 @@ struct ContentView: View {
             VStack {
                 Button("Open Flagboard") {
                     
-                    Flagboard.openn()
+                    Flagboard.open()
                 }
             }
             .navigationBarTitle("Vista Principal")

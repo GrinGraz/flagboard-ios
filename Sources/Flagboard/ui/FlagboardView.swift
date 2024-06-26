@@ -23,9 +23,17 @@ public struct FlagboardView: View {
                     List(viewModel.filteredItems) { flag in
                         switch flag.featureFlag {
                         case .stringFlag(let param):
-                            StringFlagRow(key: param.key.value, value: param.value)
+                            StringFlagRow(key: param.key.value, value: param.value, image: "string-icon")
                         case .booleanFlag(let param):
                             BooleanFlagRow(key: param.key.value, value: param.value, viewModel: viewModel)
+                        case .intFlag(let param):
+                            let stringValue = String(param.value)
+                            StringFlagRow(key: param.key.value, value: stringValue, image: "number-icon")
+                        case .jsonFlag(let param):
+                            let jsonData = try? JSONSerialization.data(withJSONObject: param.value, options: .prettyPrinted)
+                            let jsonString = String(data: jsonData ?? Data(), encoding: .utf8) ?? ""
+                            
+                            StringFlagRow(key: param.key.value, value: jsonString, image: "json-icon")
                         default:
                             EmptyView()
                         }
@@ -54,7 +62,7 @@ public struct FlagboardView: View {
         
         var body: some View {
             HStack {
-                Image("boolean-icon", bundle: Bundle.ds)
+                Image("boolean-icon", bundle: Bundle.flagboardBundle)
                     .frame(width: 24, height: 24)
                 Text(key)
                     .font(.callout)
@@ -72,11 +80,13 @@ public struct FlagboardView: View {
     struct StringFlagRow: View {
         let key: String
         var value: String
+        let image: String
         @State private var showSheet = false
         
         var body: some View {
             HStack{
-                Image("string-icon", bundle: Bundle.ds)
+                //Image("string-icon", bundle: Bundle.flagboardBundle)
+                Image(image, bundle: Bundle.flagboardBundle)
                     .frame(width: 24, height: 24)
                 Text(key)
                     .font(.callout)
@@ -91,30 +101,7 @@ public struct FlagboardView: View {
         }
     }
     
-    struct SheetView: View {
-        @Environment(\.presentationMode) var presentationMode
-        var title: String
-        var message: String
-        
-        var body: some View {
-            VStack {
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "multiply.circle")
-                            .font(.title)
-                    }
-                    .padding()
-                }
-                
-                Text(title)
-                Text(message)
-                Spacer()
-            }
-        }
-    }
+    
 }
 
 struct FlagboardView_Previews: PreviewProvider {

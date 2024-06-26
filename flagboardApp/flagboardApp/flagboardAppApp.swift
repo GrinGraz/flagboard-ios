@@ -27,10 +27,7 @@ struct MyFlags {
         "ff_new_home_enable": false,
         "ff_chat_bot_enable": false,
         "ff_string_value": false,
-        "ff_int_value": false,
-//        "ff_new_home_enable2": false,
-//        "ff_chat_bot_enable2": false,
-//        "ff_string_value2": false,
-//        "ff_int_value2": false,
+        "ff_int_value": 10,
+        "ff_json_value": ["FirstValue": 12],
     ]
 }

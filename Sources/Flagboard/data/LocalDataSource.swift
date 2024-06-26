@@ -25,7 +25,6 @@ internal struct LocalDataSource: DataSource {
         var existingFlags = userDefaults.dictionary(forKey: "allflags") ?? [:]
         existingFlags[key] = value
         userDefaults.set(existingFlags, forKey: "allflags")
-        print("here!")
     }
 
     func getAll() -> Either<FBDataError, Dictionary<String, Any>> {
@@ -45,6 +44,10 @@ internal struct LocalDataSource: DataSource {
             
             if let intValue = value as? Int {
                 return intValue
+            }
+            
+            if let jsonValue = value as? [String: Any] {
+                return jsonValue
             }
             
             return value
@@ -82,9 +85,6 @@ internal struct LocalDataSource: DataSource {
 
     func clear() {
         userDefaults.removeObject(forKey: "allflags")
-//        userDefaults.dictionaryRepresentation().keys.forEach { key in
-//            userDefaults.removeObject(forKey: key)
-//        }
     }
 
     private func getValue(forKey key: String) -> Any? {

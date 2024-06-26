@@ -36,5 +36,5 @@ extension Bundle {
         #endif
     }()
 
-    public static let ds: Bundle = .current
+    public static let flagboardBundle: Bundle = .current
 }
