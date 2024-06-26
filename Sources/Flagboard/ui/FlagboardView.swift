@@ -85,7 +85,6 @@ public struct FlagboardView: View {
         
         var body: some View {
             HStack{
-                //Image("string-icon", bundle: Bundle.flagboardBundle)
                 Image(image, bundle: Bundle.flagboardBundle)
                     .frame(width: 24, height: 24)
                 Text(key)

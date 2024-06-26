@@ -17,7 +17,7 @@ struct ContentView: View {
                     Flagboard.open()
                 }
             }
-            .navigationBarTitle("Vista Principal")
+            .navigationBarTitle("Principal View")
         }
     }
 }
