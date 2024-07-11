@@ -13,12 +13,23 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Button("Open Flagboard") {
-                    
+    
+                    Flagboard.open()
+                }
+                
+                Button("Clear Defaults and Open flagboard") {
+                    resetUserDefaults()
                     Flagboard.open()
                 }
             }
             .navigationBarTitle("Principal View")
         }
+    }
+    
+    func resetUserDefaults() {
+        let dictionary = UserDefaults.standard.dictionaryRepresentation()
+
+        dictionary.keys.forEach { UserDefaults.standard.removeObject(forKey: $0) }
     }
 }
 
