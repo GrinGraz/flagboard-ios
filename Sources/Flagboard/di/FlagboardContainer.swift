@@ -8,5 +8,5 @@
 import Foundation
 
 internal struct FlagboardContainer {
-    internal let repository = Repository(localDataSource: LocalDataSource(userDefault: UserDefaults.standard))
+    internal let repository = Repository(localDataSource: LocalDataSource(userDefault: UserDefaults(suiteName: "Flagboard") ?? UserDefaults.standard))
 }
