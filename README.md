@@ -40,8 +40,6 @@ Flagboard.open()
 
 Then you will see this.
 
-<img width="514" alt="image" src="https://github.com/GrinGraz/flagboard-ios/assets/6061374/32078b7f-3f4e-40b7-914c-4d884d6fb1ec">
-
 
 Here, you can change the value of your Boolean feature flags through a toggle button.
 
