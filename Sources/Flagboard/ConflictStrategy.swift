@@ -10,4 +10,5 @@ import Foundation
 public enum ConflictStrategy {
     case keep
     case replace
+    case merge(Dictionary<String, Any>)
 }

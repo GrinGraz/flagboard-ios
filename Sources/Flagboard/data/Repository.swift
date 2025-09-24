@@ -25,6 +25,8 @@ struct Repository {
             if getAll().isEmpty {
                 localDataSource.save(ffs: featureFlag)
             }
+        case let .merge(diccWithNewValues):
+            localDataSource.merge(ffs: diccWithNewValues)
         }
         
     }
