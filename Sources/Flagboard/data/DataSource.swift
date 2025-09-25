@@ -10,6 +10,7 @@ import Foundation
 internal protocol DataSource {
     func save(ffs: Dictionary<String, Any>)
     func save(key: String, value: Any)
+    func merge(ffs: Dictionary<String, Any>)
     func getAll() -> Either<FBDataError, Dictionary<String, Any>>
     func getIntResult(key: String) -> Either<FBDataError, Int>
     func getStringResult(key: String) -> Either<FBDataError, String>

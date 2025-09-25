@@ -27,6 +27,14 @@ internal struct LocalDataSource: DataSource {
         userDefaults.set(existingFlags, forKey: "allflags")
     }
 
+    func merge(ffs: Dictionary<String, Any>) {
+        let oldDict = userDefaults.dictionary(forKey: "allflags") ?? [:]
+        var updatedDict = oldDict.merging(ffs) { _, new in
+            new
+        }
+        userDefaults.set(updatedDict, forKey: "allflags")
+    }
+
     func getAll() -> Either<FBDataError, Dictionary<String, Any>> {
         guard let ffs = (userDefaults.object(forKey: "allflags") as? [String : Any]),
                 !ffs.isEmpty else {
